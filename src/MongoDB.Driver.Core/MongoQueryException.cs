@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver.Core.Connections;
@@ -48,20 +45,6 @@ namespace MongoDB.Driver
             _queryResult = queryResult;
         }
 
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoQueryException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        protected MongoQueryException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            _query = (BsonDocument)info.GetValue("_query", typeof(BsonDocument));
-            _queryResult = (BsonDocument)info.GetValue("_queryResult", typeof(BsonDocument));
-        }
-#endif
-
         // properties
         /// <summary>
         /// Gets the query.
@@ -84,16 +67,5 @@ namespace MongoDB.Driver
         {
             get { return _queryResult; }
         }
-
-        // methods
-#if NET452
-        /// <inheritdoc/>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("_query", _query);
-            info.AddValue("_queryResult", _queryResult);
-        }
-#endif
     }
 }

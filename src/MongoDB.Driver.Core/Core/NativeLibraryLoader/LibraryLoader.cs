@@ -77,16 +77,6 @@ namespace MongoDB.Driver.Core.NativeLibraryLoader
 
         private SupportedPlatform GetCurrentPlatform()
         {
-#if NETSTANDARD1_5
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                return SupportedPlatform.MacOS;
-            }
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return SupportedPlatform.Linux;
-            }
-#endif
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return SupportedPlatform.Windows;
@@ -97,11 +87,8 @@ namespace MongoDB.Driver.Core.NativeLibraryLoader
 
         private void ThrowIfNot64BitProcess()
         {
-#if NET452 || NETSTANDARD2_0
             var is64Bit = Environment.Is64BitProcess;
-#else
-            var is64Bit = IntPtr.Size == 8;
-#endif
+
             if (!is64Bit)
             {
                 throw new PlatformNotSupportedException("Native libraries can be loaded only in a 64-bit process.");

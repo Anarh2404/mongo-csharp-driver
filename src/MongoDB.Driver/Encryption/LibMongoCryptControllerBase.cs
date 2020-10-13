@@ -226,11 +226,7 @@ namespace MongoDB.Driver.Encryption
             using (var networkStream = new NetworkStream(socket, ownsSocket: true))
             using (var sslStream = new SslStream(networkStream, leaveInnerStreamOpen: false))
             {
-#if NETSTANDARD1_5
-                sslStream.AuthenticateAsClientAsync(host).ConfigureAwait(false).GetAwaiter().GetResult();
-#else
                 sslStream.AuthenticateAsClient(host);
-#endif
 
                 var requestBytes = request.Message.ToArray();
                 sslStream.Write(requestBytes);
@@ -250,11 +246,7 @@ namespace MongoDB.Driver.Encryption
         {
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             ParseKmsEndPoint(request.Endpoint, out var host, out var port);
-#if NETSTANDARD1_5
-            await socket.ConnectAsync(host, port).ConfigureAwait(false);
-#else
             await Task.Factory.FromAsync(socket.BeginConnect(host, port, null, null), socket.EndConnect).ConfigureAwait(false);
-#endif
 
             using (var networkStream = new NetworkStream(socket, ownsSocket: true))
             using (var sslStream = new SslStream(networkStream, leaveInnerStreamOpen: false))

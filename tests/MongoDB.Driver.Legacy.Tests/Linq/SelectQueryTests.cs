@@ -5985,38 +5985,6 @@ namespace MongoDB.Driver.Tests.Linq
             Assert.Equal(4, Consume(query));
         }
 
-#if NET452 || NETCOREAPP1_0
-        [Fact]
-        public void TestWhereSTrimStartTrimEndToLowerContainsXyz()
-        {
-            var query = from c in __collection.AsQueryable<C>()
-                        where c.S.TrimStart(' ', '.', '-', '\t').TrimEnd().ToLower().Contains("xyz")
-                        select c;
-
-            var translatedQuery = MongoQueryTranslator.Translate(query);
-            Assert.IsType<SelectQuery>(translatedQuery);
-            Assert.Same(__collection, translatedQuery.Collection);
-            Assert.Same(typeof(C), translatedQuery.DocumentType);
-
-            var selectQuery = (SelectQuery)translatedQuery;                  
-#if NET452 || NETCOREAPP1_0
-            var expectedExpression =
-                "(C c) => c.S.TrimStart(Char[]:{ ' ', '.', '-', '\t' }).TrimEnd(Char[]:{ }).ToLower().Contains(\"xyz\")";
-#else
-            var expectedExpression =
-                "(C c) => c.S.TrimStart(Char[]:{ ' ', '.', '-', '\t' }).TrimEnd().ToLower().Contains(\"xyz\")";
-#endif
-            Assert.Equal(expectedExpression, ExpressionFormatter.ToString(selectQuery.Where));
-            Assert.Null(selectQuery.OrderBy);
-            Assert.Null(selectQuery.Projection);
-            Assert.Null(selectQuery.Skip);
-            Assert.Null(selectQuery.Take);
-
-            Assert.Equal("{ \"s\" : /^[\\ \\.\\-\\t]*.*xyz.*\\s*$/is }", selectQuery.BuildQuery().ToJson());
-            Assert.Equal(1, Consume(query));
-        }
-#endif
-
         [Fact]
         public void TestWhereSToLowerEqualsConstantLowerCaseValue()
         {
@@ -6292,39 +6260,6 @@ namespace MongoDB.Driver.Tests.Linq
             Assert.Equal("{ \"s\" : { \"$ne\" : null } }", selectQuery.BuildQuery().ToJson());
             Assert.Equal(2, Consume(query));
         }
-
-#if NET452 || NETCOREAPP1_0
-        [Fact]
-        public void TestWhereSTrimStartTrimEndToLowerInvariantContainsXyz()
-        {
-            var query = from c in __collection.AsQueryable<C>()
-                        where c.S.TrimStart(' ', '.', '-', '\t').TrimEnd().ToLowerInvariant().Contains("xyz")
-                        select c;
-
-            var translatedQuery = MongoQueryTranslator.Translate(query);
-            Assert.IsType<SelectQuery>(translatedQuery);
-            Assert.Same(__collection, translatedQuery.Collection);
-            Assert.Same(typeof(C), translatedQuery.DocumentType);
-
-            var selectQuery = (SelectQuery)translatedQuery;
-            
-#if NET452 || NETCOREAPP1_0
-            var expectedExpression =
-                "(C c) => c.S.TrimStart(Char[]:{ ' ', '.', '-', '\t' }).TrimEnd(Char[]:{ }).ToLowerInvariant().Contains(\"xyz\")";
-#else
-            var expectedExpression =
-                "(C c) => c.S.TrimStart(Char[]:{ ' ', '.', '-', '\t' }).TrimEnd().ToLowerInvariant().Contains(\"xyz\")";
-#endif
-            Assert.Equal(expectedExpression, ExpressionFormatter.ToString(selectQuery.Where));      
-            Assert.Null(selectQuery.OrderBy);
-            Assert.Null(selectQuery.Projection);
-            Assert.Null(selectQuery.Skip);
-            Assert.Null(selectQuery.Take);
-
-            Assert.Equal("{ \"s\" : /^[\\ \\.\\-\\t]*.*xyz.*\\s*$/is }", selectQuery.BuildQuery().ToJson());
-            Assert.Equal(1, Consume(query));
-        }
-#endif
 
         [Fact]
         public void TestWhereSToLowerInvariantEqualsConstantLowerCaseValue()

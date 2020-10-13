@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Misc;
 
@@ -49,17 +46,5 @@ namespace MongoDB.Driver.GridFS
             : base(FormatMessage(id, n, reason))
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GridFSChunkException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public GridFSChunkException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

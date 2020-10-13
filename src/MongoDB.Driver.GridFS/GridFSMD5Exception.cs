@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Misc;
 
@@ -45,17 +42,5 @@ namespace MongoDB.Driver.GridFS
             : base(FormatMessage(id))
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GridFSMD5Exception"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public GridFSMD5Exception(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

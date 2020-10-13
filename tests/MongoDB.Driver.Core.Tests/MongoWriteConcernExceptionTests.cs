@@ -15,9 +15,6 @@
 
 using System.IO;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Bson;
 using MongoDB.Bson.TestHelpers.EqualityComparers;
@@ -46,28 +43,5 @@ namespace MongoDB.Driver
             subject.Result.Should().Be(_writeConcernResult.Response);
             subject.WriteConcernResult.Should().Be(_writeConcernResult);
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoWriteConcernException(_connectionId, _message, _writeConcernResult);
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoWriteConcernException)formatter.Deserialize(stream);
-
-                rehydrated.Command.Should().BeNull();
-                rehydrated.ConnectionId.Should().Be(subject.ConnectionId);
-                rehydrated.InnerException.Should().BeNull();
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.Result.Should().Be(subject.Result);
-                rehydrated.WriteConcernResult.Should().BeUsing(subject.WriteConcernResult, EqualityComparerRegistry.Default);
-            }
-        }
-#endif
     }
 }

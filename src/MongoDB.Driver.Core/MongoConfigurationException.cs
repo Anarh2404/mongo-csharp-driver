@@ -16,9 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,17 +46,5 @@ namespace MongoDB.Driver
             : base(message, innerException)
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoConfigurationException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        protected MongoConfigurationException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

@@ -17,9 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Bson;
 
 namespace MongoDB.Driver

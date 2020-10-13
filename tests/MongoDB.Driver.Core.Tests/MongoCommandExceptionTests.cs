@@ -16,10 +16,6 @@
 using System;
 using System.IO;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Clusters;
@@ -110,29 +106,5 @@ namespace MongoDB.Driver
 
             result.Should().Be("error message");
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoCommandException(_connectionId, _message, _command, _commandResult);
-            subject.AddErrorLabel("one");
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoCommandException)formatter.Deserialize(stream);
-
-                rehydrated.ErrorLabels.Should().Equal(subject.ErrorLabels);
-                rehydrated.ConnectionId.Should().Be(subject.ConnectionId);
-                rehydrated.Message.Should().Be(_message);
-                rehydrated.InnerException.Should().BeNull();
-                rehydrated.Command.Should().Be(_command);
-                rehydrated.Result.Should().Be(_commandResult);
-            }
-        }
-#endif
     }
 }

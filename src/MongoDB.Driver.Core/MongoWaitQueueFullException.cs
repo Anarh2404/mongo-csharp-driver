@@ -15,9 +15,6 @@
 
 using System;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Driver.Core.Clusters;
 using MongoDB.Driver.Core.Misc;
 
@@ -55,17 +52,5 @@ namespace MongoDB.Driver
             : base(message, null)
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoWaitQueueFullException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        protected MongoWaitQueueFullException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

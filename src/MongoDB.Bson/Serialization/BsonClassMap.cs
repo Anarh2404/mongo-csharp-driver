@@ -439,7 +439,6 @@ namespace MongoDB.Bson.Serialization
             // fallback to previous approach (which worked on older versions of .NET Core)
             var mscorlibAssembly = typeof(string).GetTypeInfo().Assembly;
             return mscorlibAssembly.GetType("System.Runtime.Serialization.FormatterServices");
-#endif
         }
 
         private static MethodInfo GetGetUninitializedObjectMethodInfo()

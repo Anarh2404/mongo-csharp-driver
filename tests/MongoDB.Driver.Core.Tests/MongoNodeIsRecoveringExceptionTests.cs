@@ -16,9 +16,6 @@
 using System;
 using System.IO;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Clusters;
@@ -73,27 +70,5 @@ namespace MongoDB.Driver
             result.Command.Should().BeSameAs(_command);
             result.Result.Should().BeSameAs(serverResult);
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoNodeIsRecoveringException(_connectionId, _command, _serverResult);
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoNodeIsRecoveringException)formatter.Deserialize(stream);
-
-                rehydrated.ConnectionId.Should().Be(subject.ConnectionId);
-                rehydrated.InnerException.Should().BeNull();
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.Command.Should().Be(subject.Command);
-                rehydrated.Result.Should().Be(subject.Result);
-            }
-        }
-#endif
     }
 }

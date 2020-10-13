@@ -40,18 +40,6 @@ namespace MongoDB.Driver.GridFS
         /// </value>
         public abstract GridFSFileInfo<TFileId> FileInfo { get; }
 
-        // public methods
-#if NETSTANDARD1_5
-        /// <summary>
-        /// Closes the GridFS stream.
-        /// </summary>
-        public virtual void Close()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-#endif
-
         /// <summary>
         /// Closes the GridFS stream.
         /// </summary>

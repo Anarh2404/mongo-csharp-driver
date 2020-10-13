@@ -1347,14 +1347,6 @@ namespace MongoDB.Driver.Tests.Linq.Translators
         {
             RequireServer.Check().VersionGreaterThanOrEqualTo("3.3.6");
 
-#if !NETCOREAPP2_1 
-            /* for implementations that don't support omitted optional parameters in expression trees
-             * skip to next test */
-            var result1 = Project(x => new { Result = x.A.Split('e') });
-            result1.Projection.Should().Be("{ Result: { \"$split\": [\"$A\", \"e\" ] }, _id: 0 }");
-            result1.Value.Result.Should().BeEquivalentTo("Aw", "som", "");
-#endif
-
             var result2 = Project(x => new { Result = x.A.Split(new[] { 'e' }) });
             result2.Projection.Should().Be("{ Result: { \"$split\": [\"$A\", \"e\" ] }, _id: 0 }");
             result2.Value.Result.Should().BeEquivalentTo("Aw", "som", "");
@@ -1449,10 +1441,6 @@ namespace MongoDB.Driver.Tests.Linq.Translators
         [Theory]
         [InlineData(StringComparison.CurrentCulture)]
         [InlineData(StringComparison.CurrentCultureIgnoreCase)]
-#if NET452
-        [InlineData(StringComparison.InvariantCulture)]
-        [InlineData(StringComparison.InvariantCultureIgnoreCase)]
-#endif
         public void Should_throw_for_a_not_supported_string_comparison_type(StringComparison comparison)
         {
             Action act = () => Project(x => new { Result = x.B.Equals("balloon", comparison) });

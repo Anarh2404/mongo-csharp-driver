@@ -86,40 +86,7 @@ namespace MongoDB.Driver.Core.Misc
             }
         }
 
-#if NET452
-        /// <summary>
-        /// Gets the object data required to serialize an end point.
-        /// </summary>
-        /// <param name="value">The end point.</param>
-        /// <returns>The object data.</returns>
-        public static List<object> GetObjectData(EndPoint value)
-        {
-            var dnsEndPoint = value as DnsEndPoint;
-            if (dnsEndPoint != null)
-            {
-                return new List<object>
-                {
-                    "DnsEndPoint",
-                    dnsEndPoint.Host,
-                    dnsEndPoint.Port,
-                    (int)dnsEndPoint.AddressFamily
-                };
-            }
 
-            var ipEndPoint = value as IPEndPoint;
-            if (ipEndPoint != null)
-            {
-                return new List<object>
-                {
-                    "IPEndPoint",
-                    ipEndPoint.Address,
-                    ipEndPoint.Port
-                };
-            }
-
-            return null;
-        }
-#endif
 
         /// <summary>
         /// Compares two sequences of end points.

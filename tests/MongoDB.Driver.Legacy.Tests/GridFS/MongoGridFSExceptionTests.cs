@@ -14,13 +14,7 @@
 */
 
 using System;
-#if NET452
-using System.IO;
-#endif
 using System.Net;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Driver.Core.Clusters;
 using MongoDB.Driver.Core.Connections;
@@ -55,25 +49,5 @@ namespace MongoDB.Driver.Tests.GridFS
             subject.InnerException.Should().BeSameAs(_innerException);
             subject.Message.Should().BeSameAs(_message);
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoGridFSException(_connectionId, _message, _innerException);
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoGridFSException)formatter.Deserialize(stream);
-
-                rehydrated.ConnectionId.Should().Be(subject.ConnectionId);
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.InnerException.Message.Should().Be(subject.InnerException.Message); // Exception does not override Equals
-            }
-        }
-#endif
     }
 }

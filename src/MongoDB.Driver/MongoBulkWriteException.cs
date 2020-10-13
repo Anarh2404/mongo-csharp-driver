@@ -16,9 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using System.Text;
 using MongoDB.Driver.Core.Connections;
 using MongoDB.Driver.Core.Operations;
@@ -52,20 +49,6 @@ namespace MongoDB.Driver
             _writeConcernError = writeConcernError;
         }
 
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the MongoQueryException class (this overload supports deserialization).
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public MongoBulkWriteException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            _writeConcernError = (WriteConcernError)info.GetValue("_writeConcernError", typeof(WriteConcernError));
-            _writeErrors = (IReadOnlyList<BulkWriteError>)info.GetValue("_writeErrors", typeof(IReadOnlyList<BulkWriteError>));
-        }
-#endif
-
         // properties
         /// <summary>
         /// Gets the write concern error.
@@ -82,21 +65,6 @@ namespace MongoDB.Driver
         {
             get { return _writeErrors; }
         }
-
-        // methods
-#if NET452
-        /// <summary>
-        /// Gets the object data.
-        /// </summary>
-        /// <param name="info">The information.</param>
-        /// <param name="context">The context.</param>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("_writeConcernError", _writeConcernError);
-            info.AddValue("_writeErrors", _writeErrors);
-        }
-#endif
 
         // private static methods
         private static string FormatMessage(IEnumerable<BulkWriteError> writeErrors, WriteConcernError writeConcernError)
@@ -151,23 +119,6 @@ namespace MongoDB.Driver
             _unprocessedRequests = unprocessedRequests.ToList();
         }
 
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the MongoQueryException class (this overload supports deserialization).
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public MongoBulkWriteException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (typeof(TDocument).IsSerializable)
-            {
-                _result = (BulkWriteResult<TDocument>)info.GetValue("_result", typeof(BulkWriteResult<TDocument>));
-                _unprocessedRequests = (IReadOnlyList<WriteModel<TDocument>>)info.GetValue("_unprocessedRequests", typeof(IReadOnlyList<WriteModel<TDocument>>));
-            }
-        }
-#endif
-
         // public properties
         /// <summary>
         /// Gets the result of the bulk write operation.
@@ -184,24 +135,6 @@ namespace MongoDB.Driver
         {
             get { return _unprocessedRequests; }
         }
-
-        // methods
-#if NET452
-        /// <summary>
-        /// Gets the object data.
-        /// </summary>
-        /// <param name="info">The information.</param>
-        /// <param name="context">The context.</param>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            if (typeof(TDocument).IsSerializable)
-            {
-                info.AddValue("_result", _result);
-                info.AddValue("_unprocessedRequests", _unprocessedRequests);
-            }
-        }
-#endif
 
         // internal static methods
         internal static MongoBulkWriteException<TDocument> FromCore(MongoBulkWriteOperationException ex)

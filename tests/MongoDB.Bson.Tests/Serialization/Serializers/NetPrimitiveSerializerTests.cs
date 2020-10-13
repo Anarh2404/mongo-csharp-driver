@@ -497,42 +497,6 @@ namespace MongoDB.Bson.Tests.Serialization
             var rehydrated = BsonSerializer.Deserialize<TestClass>(bson);
             Assert.True(bson.SequenceEqual(rehydrated.ToBson()));
         }
-
-#if NET452
-        [Fact]
-        public void TestEnUsUseUserOverrideFalse()
-        {
-            var obj = new TestClass
-            {
-                V = new CultureInfo("en-US", false)
-            };
-            var json = obj.ToJson();
-            var expected = "{ 'V' : { 'Name' : 'en-US', 'UseUserOverride' : false } }".Replace("'", "\"");
-            Assert.Equal(expected, json);
-
-            var bson = obj.ToBson();
-            var rehydrated = BsonSerializer.Deserialize<TestClass>(bson);
-            Assert.True(bson.SequenceEqual(rehydrated.ToBson()));
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void TestEnUsUseUserOverrideTrue()
-        {
-            var obj = new TestClass
-            {
-                V = new CultureInfo("en-US", true)
-            };
-            var json = obj.ToJson();
-            var expected = "{ 'V' : 'en-US' }".Replace("'", "\"");
-            Assert.Equal(expected, json);
-
-            var bson = obj.ToBson();
-            var rehydrated = BsonSerializer.Deserialize<TestClass>(bson);
-            Assert.True(bson.SequenceEqual(rehydrated.ToBson()));
-        }
-#endif
     }
 
     public class DateTimeOffsetSerializerTests

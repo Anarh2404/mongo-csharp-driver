@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using System.Text;
 using MongoDB.Driver.Core.Connections;
 
@@ -61,20 +58,6 @@ namespace MongoDB.Driver
             _writeConcernError = writeConcernError;
         }
 
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the MongoQueryException class (this overload supports deserialization).
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public MongoWriteException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            _writeConcernError = (WriteConcernError)info.GetValue("_writeConcernError", typeof(WriteConcernError));
-            _writeError = (WriteError)info.GetValue("_writeError", typeof(WriteError));
-        }
-#endif
-
         // properties
         /// <summary>
         /// Gets the write concern error.
@@ -91,21 +74,6 @@ namespace MongoDB.Driver
         {
             get { return _writeError; }
         }
-
-        // methods
-#if NET452
-        /// <summary>
-        /// Gets the object data.
-        /// </summary>
-        /// <param name="info">The information.</param>
-        /// <param name="context">The context.</param>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("_writeConcernError", _writeConcernError);
-            info.AddValue("_writeError", _writeError);
-        }
-#endif
 
         // private static methods
         private static string FormatMessage(WriteError writeError, WriteConcernError writeConcernError)

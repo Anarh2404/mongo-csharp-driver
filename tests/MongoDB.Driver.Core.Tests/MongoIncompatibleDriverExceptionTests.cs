@@ -15,9 +15,6 @@
 
 using System.IO;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Driver.Core.Clusters;
 using MongoDB.Driver.Core.Misc;
@@ -54,24 +51,5 @@ namespace MongoDB.Driver
             subject.Message.Should().StartWith("Server at localhost:27017 reports wire version 0");
             subject.InnerException.Should().BeNull();
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoIncompatibleDriverException(_clusterDescription);
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoIncompatibleDriverException)formatter.Deserialize(stream);
-
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.InnerException.Should().BeNull();
-            }
-        }
-#endif
     }
 }

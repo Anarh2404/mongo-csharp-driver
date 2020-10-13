@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Connections;
 
@@ -73,20 +70,6 @@ namespace MongoDB.Driver
 
             AddErrorLabelsFromCommandResult(this, result);
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoCommandException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        protected MongoCommandException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            _command = (BsonDocument)info.GetValue("_command", typeof(BsonDocument));
-            _result = (BsonDocument)info.GetValue("_result", typeof(BsonDocument));
-        }
-#endif
 
         // properties
         /// <summary>
@@ -145,14 +128,5 @@ namespace MongoDB.Driver
         }
 
         // methods
-#if NET452
-        /// <inheritdoc/>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("_command", _command);
-            info.AddValue("_result", _result);
-        }
-#endif
     }
 }

@@ -306,15 +306,11 @@ namespace MongoDB.Bson.Tests.Serialization.CollectionSerializers
             var obj = new T { L = new ArrayList(), Q = new Queue(), S = new Stack() };
             var json = obj.ToJson();
             var rep = "[]";
-#if NET452
-            var arrayListDiscriminator = "System.Collections.ArrayList";
-            var queueDiscriminator = "System.Collections.Queue";
-            var stackDiscriminator = "System.Collections.Stack";
-#else
+
             var arrayListDiscriminator = typeof(ArrayList).AssemblyQualifiedName;
             var queueDiscriminator = typeof(Queue).AssemblyQualifiedName;
             var stackDiscriminator = typeof(Stack).AssemblyQualifiedName;
-#endif
+
             var expected = ("{ 'L' : { '_t' : '" + arrayListDiscriminator + "', '_v' : #R }, 'Q' : { '_t' : '" + queueDiscriminator + "', '_v' : #R }, 'S' : { '_t' : '" + stackDiscriminator + "', '_v' : #R } }").Replace("#R", rep).Replace("'", "\"");
             Assert.Equal(expected, json);
 
@@ -333,15 +329,11 @@ namespace MongoDB.Bson.Tests.Serialization.CollectionSerializers
             var obj = new T { L = list, Q = new Queue(list), S = new Stack(list) };
             var json = obj.ToJson();
             var rep = "[1]";
-#if NET452
-            var arrayListDiscriminator = "System.Collections.ArrayList";
-            var queueDiscriminator = "System.Collections.Queue";
-            var stackDiscriminator = "System.Collections.Stack";
-#else
+
             var arrayListDiscriminator = typeof(ArrayList).AssemblyQualifiedName;
             var queueDiscriminator = typeof(Queue).AssemblyQualifiedName;
             var stackDiscriminator = typeof(Stack).AssemblyQualifiedName;
-#endif
+
             var expected = ("{ 'L' : { '_t' : '" + arrayListDiscriminator + "', '_v' : #R }, 'Q' : { '_t' : '" + queueDiscriminator + "', '_v' : #R }, 'S' : { '_t' : '" + stackDiscriminator + "', '_v' : #R } }").Replace("#R", rep).Replace("'", "\"");
             Assert.Equal(expected, json);
 

@@ -15,9 +15,6 @@
 
 using System.IO;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using Xunit;
 
@@ -50,24 +47,5 @@ namespace MongoDB.Driver
 
             subject.Message.Should().Be("The wait queue for server selection is full.");
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoWaitQueueFullException("message");
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoWaitQueueFullException)formatter.Deserialize(stream);
-
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.InnerException.Should().BeNull();
-            }
-        }
-#endif
     }
 }

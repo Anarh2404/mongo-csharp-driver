@@ -17,9 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Bson.TestHelpers.XunitExtensions;
 using Xunit;
@@ -141,26 +138,5 @@ namespace MongoDB.Driver
 
             subject.ErrorLabels.Should().Equal(errorLabels.Where(x => x != removeErrorLabel));
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoException(_message, _innerException);
-            subject.AddErrorLabel("one");
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoException)formatter.Deserialize(stream);
-
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.InnerException.Message.Should().Be(subject.InnerException.Message); // Exception does not override Equals
-                rehydrated.ErrorLabels.Should().Equal(subject.ErrorLabels);
-            }
-        }
-#endif
     }
 }

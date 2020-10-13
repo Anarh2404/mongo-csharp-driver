@@ -53,86 +53,6 @@ namespace MongoDB.Bson.Tests
             action.ShouldThrow<ObjectDisposedException>().And.ObjectName.Should().Be("BsonStreamAdapter");
         }
 
-#if NET452
-        [Fact]
-        public void BeginRead_should_call_wrapped_stream()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var buffer = new byte[0];
-            var offset = 1;
-            var count = 2;
-            var mockCallback = new Mock<AsyncCallback>();
-            var state = new object();
-            var mockAsyncResult = new Mock<IAsyncResult>();
-            mockStream.Setup(s => s.BeginRead(buffer, offset, count, mockCallback.Object, state)).Returns(mockAsyncResult.Object);
-
-            var result = subject.BeginRead(buffer, offset, count, mockCallback.Object, state);
-
-            result.Should().BeSameAs(mockAsyncResult.Object);
-            mockStream.Verify(s => s.BeginRead(buffer, offset, count, mockCallback.Object, state), Times.Once);
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void BeginRead_should_throw_when_subject_is_diposed()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var buffer = new byte[0];
-            var offset = 1;
-            var count = 2;
-            var mockCallback = new Mock<AsyncCallback>();
-            var state = new object();
-            subject.Dispose();
-
-            Action action = () => subject.BeginRead(buffer, offset, count, mockCallback.Object, state);
-
-            action.ShouldThrow<ObjectDisposedException>().And.ObjectName.Should().Be("BsonStreamAdapter");
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void BeginWrite_should_call_wrapped_stream()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var buffer = new byte[0];
-            var offset = 1;
-            var count = 2;
-            var mockCallback = new Mock<AsyncCallback>();
-            var state = new object();
-            var mockAsyncResult = new Mock<IAsyncResult>();
-            mockStream.Setup(s => s.BeginWrite(buffer, offset, count, mockCallback.Object, state)).Returns(mockAsyncResult.Object);
-
-            var result = subject.BeginWrite(buffer, offset, count, mockCallback.Object, state);
-
-            result.Should().BeSameAs(mockAsyncResult.Object);
-            mockStream.Verify(s => s.BeginWrite(buffer, offset, count, mockCallback.Object, state), Times.Once);
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void BeginWrite_should_throw_when_subject_is_disposed()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var buffer = new byte[0];
-            var offset = 1;
-            var count = 2;
-            var mockCallback = new Mock<AsyncCallback>();
-            var state = new object();
-            subject.Dispose();
-
-            Action action = () => subject.BeginWrite(buffer, offset, count, mockCallback.Object, state);
-
-            action.ShouldThrow<ObjectDisposedException>().And.ObjectName.Should().Be("BsonStreamAdapter");
-        }
-#endif
-
         [Theory]
         [ParameterAttributeData]
         public void CanRead_should_call_wrapped_stream(
@@ -245,35 +165,6 @@ namespace MongoDB.Bson.Tests
             action.ShouldThrow<ObjectDisposedException>().And.ObjectName.Should().Be("BsonStreamAdapter");
         }
 
-#if NET452
-        [Fact]
-        public void Close_can_be_called_multiple_times()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-
-            subject.Close();
-            subject.Close();
-
-            var subjectReflector = new Reflector(subject);
-            subjectReflector._disposed.Should().BeTrue();
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void Close_should_dispose_subject()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-
-            subject.Close();
-
-            var subjectReflector = new Reflector(subject);
-            subjectReflector._disposed.Should().BeTrue();
-        }
-#endif
-
         [Fact]
         public void constructor_should_use_false_as_the_default_value_for_ownsStream()
         {
@@ -356,36 +247,6 @@ namespace MongoDB.Bson.Tests
             subjectReflector._disposed.Should().BeTrue();
         }
 
-#if NET452
-        [Fact]
-        public void Dispose_should_dispose_stream_once_when_Disposed_is_called_more_than_once()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object, ownsStream: true);
-
-            subject.Dispose();
-            subject.Dispose();
-
-            mockStream.Verify(s => s.Close(), Times.Once); // Dispose is not virtual but calls virtual Close
-        }
-#endif
-
-#if NET452
-       [Theory]
-        [ParameterAttributeData]
-        public void Dispose_should_dispose_stream_only_when_it_owns_it(
-            [Values(false, true)]
-            bool ownsStream)
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object, ownsStream: ownsStream);
-
-            subject.Dispose();
-
-            mockStream.Verify(s => s.Close(), Times.Exactly(ownsStream ? 1 : 0)); // Dispose is not virtual but calls virtual Close
-        }
-#endif
-
         [Fact]
         public void Dispose_should_dispose_subject()
         {
@@ -397,67 +258,6 @@ namespace MongoDB.Bson.Tests
             var subjectReflector = new Reflector(subject);
             subjectReflector._disposed.Should().BeTrue();
         }
-
-#if NET452
-        [Fact]
-        public void EndRead_should_call_wrapped_stream()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var mockAsyncResult = new Mock<IAsyncResult>();
-            var numberOfBytesRead = 1;
-            mockStream.Setup(s => s.EndRead(mockAsyncResult.Object)).Returns(numberOfBytesRead);
-
-            var result = subject.EndRead(mockAsyncResult.Object);
-
-            result.Should().Be(numberOfBytesRead);
-            mockStream.Verify(s => s.EndRead(mockAsyncResult.Object), Times.Once);
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void EndRead_should_throw_when_subject_is_disposed()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var mockAsyncResult = new Mock<IAsyncResult>();
-            subject.Dispose();
-
-            Action action = () => subject.EndRead(mockAsyncResult.Object);
-
-            action.ShouldThrow<ObjectDisposedException>().And.ObjectName.Should().Be("BsonStreamAdapter");
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void EndWrite_should_call_wrapped_stream()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var mockAsyncResult = new Mock<IAsyncResult>();
-
-            subject.EndWrite(mockAsyncResult.Object);
-
-            mockStream.Verify(s => s.EndWrite(mockAsyncResult.Object), Times.Once);
-        }
-#endif
-
-#if NET452
-        [Fact]
-        public void EndWrite_should_throw_when_subject_is_disposed()
-        {
-            var mockStream = new Mock<Stream>();
-            var subject = new BsonStreamAdapter(mockStream.Object);
-            var mockAsyncResult = new Mock<IAsyncResult>();
-            subject.Dispose();
-
-            Action action = () => subject.EndWrite(mockAsyncResult.Object);
-
-            action.ShouldThrow<ObjectDisposedException>().And.ObjectName.Should().Be("BsonStreamAdapter");
-        }
-#endif
 
         [Fact]
         public void Flush_should_call_wrapped_stream()

@@ -31,13 +31,7 @@ namespace MongoDB.Driver.Core.Tests
         // private methods
         private string GetExpectedTargetFramework()
         {
-#if NETCOREAPP1_1
-            return "netstandard15";
-#elif NETCOREAPP2_1
             return "netstandard20";
-#elif NET452
-            return "net452";
-#endif
         }
     }
 }

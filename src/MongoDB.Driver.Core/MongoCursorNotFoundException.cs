@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Connections;
 using MongoDB.Driver.Core.Misc;
@@ -57,19 +54,6 @@ namespace MongoDB.Driver
             _cursorId = cursorId;
         }
 
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoCursorNotFoundException"/> class.
-        /// </summary>
-        /// <param name="info">The information.</param>
-        /// <param name="context">The context.</param>
-        protected MongoCursorNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            _cursorId = info.GetInt64("_cursorId");
-        }
-#endif
-
         // properties
         /// <summary>
         /// Gets the cursor identifier.
@@ -83,13 +67,5 @@ namespace MongoDB.Driver
         }
 
         // methods
-#if NET452
-        /// <inheritdoc/>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("_cursorId", _cursorId);
-        }
-#endif
     }
 }

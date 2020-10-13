@@ -57,11 +57,7 @@ namespace WorkloadExecutor
                 Console.WriteLine("dotnet main finally> Writing final results file");
                 var resultsJson = ConvertResultsToJson();
                 Console.WriteLine(resultsJson);
-#if NETCOREAPP2_1
-                File.WriteAllTextAsync(resultsPath, resultsJson).Wait();
-#else
                 File.WriteAllText(resultsPath, resultsJson);
-#endif
             }
         }
 

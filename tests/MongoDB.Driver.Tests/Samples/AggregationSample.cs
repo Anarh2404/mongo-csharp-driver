@@ -87,7 +87,6 @@ namespace MongoDB.Driver.Tests.Samples
             result.Count.Should().Be(1);
         }
 
-#if !MONO
         [Fact]
         public async Task States_with_pops_over_20000_queryable_syntax()
         {
@@ -100,7 +99,6 @@ namespace MongoDB.Driver.Tests.Samples
 
             result.Count.Should().Be(1);
         }
-#endif
 
         [Fact]
         public async Task Average_city_population_by_state()
@@ -166,7 +164,6 @@ namespace MongoDB.Driver.Tests.Samples
             result[1].SmallestCity.Population.Should().Be(1350);
         }
 
-#if !MONO
         [Fact]
         public async Task Largest_and_smallest_cities_by_state_queryable_syntax()
         {
@@ -199,7 +196,6 @@ namespace MongoDB.Driver.Tests.Samples
             result[1].SmallestCity.Name.Should().Be("LEEDS");
             result[1].SmallestCity.Population.Should().Be(1350);
         }
-#endif
 
         [BsonIgnoreExtraElements]
         private class ZipEntry

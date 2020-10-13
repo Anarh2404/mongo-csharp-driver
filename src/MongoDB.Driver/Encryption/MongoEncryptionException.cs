@@ -13,10 +13,6 @@
 * limitations under the License.
 */
 
-#if NET452
-using System.Runtime.Serialization;
-#endif
-
 using System;
 
 namespace MongoDB.Driver.Encryption

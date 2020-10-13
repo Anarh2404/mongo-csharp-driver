@@ -15,9 +15,6 @@
 
 using System;
 using System.Linq;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Driver.Core.Clusters;
 using MongoDB.Driver.Core.Misc;
 using MongoDB.Driver.Core.Servers;
@@ -79,17 +76,5 @@ namespace MongoDB.Driver
             : base(FormatMessage(clusterDescription), null)
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoIncompatibleDriverException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        protected MongoIncompatibleDriverException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

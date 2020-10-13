@@ -15,9 +15,6 @@
 
 using System.IO;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Clusters;
@@ -47,28 +44,5 @@ namespace MongoDB.Driver
             subject.Query.Should().BeSameAs(_query);
             subject.QueryResult.Should().BeNull();
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoCursorNotFoundException(_connectionId, _cursorId, _query);
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoCursorNotFoundException)formatter.Deserialize(stream);
-
-                rehydrated.ConnectionId.Should().Be(subject.ConnectionId);
-                rehydrated.CursorId.Should().Be(subject.CursorId);
-                rehydrated.InnerException.Should().BeNull();
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.Query.Should().Be(subject.Query);
-                rehydrated.QueryResult.Should().Be(subject.QueryResult);
-            }
-        }
-#endif
     }
 }

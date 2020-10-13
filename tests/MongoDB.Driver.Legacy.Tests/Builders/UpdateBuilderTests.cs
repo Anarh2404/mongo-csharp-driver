@@ -838,27 +838,6 @@ namespace MongoDB.Driver.Tests.Builders
             Assert.Equal(expected, update.ToJson());
         }
 
-        // tests fail on .NET Core 2.1 with out of order key-value-pairs        
-#if !NETCOREAPP2_1
-        [Fact]
-        public void TestReplace()
-        {
-            var t = new Test { Id = 1, X = 2, Y = null, B = null };
-            var update = Update.Replace(t);
-            var expected = "{ \"_id\" : 1, \"x\" : 2, \"xl\" : NumberLong(0), \"xd\" : 0.0, \"y\" : null, \"b\" : null, \"dAsDateTime\" : ISODate(\"0001-01-01T00:00:00Z\"), \"dAsInt64\" : NumberLong(0), \"bdt\" : { \"_csharpnull\" : true }, \"bts\" : { \"_csharpnull\" : true } }";
-            Assert.Equal(expected, update.ToJson());
-        }
-
-        [Fact]
-        public void TestReplace_Typed()
-        {
-            var t = new Test { Id = 1, X = 2, Y = null, B = null };
-            var update = Update<Test>.Replace(t);
-            var expected = "{ \"_id\" : 1, \"x\" : 2, \"xl\" : NumberLong(0), \"xd\" : 0.0, \"y\" : null, \"b\" : null, \"dAsDateTime\" : ISODate(\"0001-01-01T00:00:00Z\"), \"dAsInt64\" : NumberLong(0), \"bdt\" : { \"_csharpnull\" : true }, \"bts\" : { \"_csharpnull\" : true } }";
-            Assert.Equal(expected, update.ToJson());
-        }
-#endif        
-
         [Fact]
         public void TestSet()
         {

@@ -17,9 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-#if NET452
-using System.Runtime.Serialization;
-#endif
+
 using System.Text;
 using MongoDB.Driver.Core.Connections;
 
@@ -59,22 +57,6 @@ namespace MongoDB.Driver.Core.Operations
             _writeConcernError = writeConcernError;
             _unprocessedRequests = unprocessedRequests;
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoBulkWriteOperationException" /> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public MongoBulkWriteOperationException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            _result = (BulkWriteOperationResult)info.GetValue("_result", typeof(BulkWriteOperationResult));
-            _unprocessedRequests = (IReadOnlyList<WriteRequest>)info.GetValue("_unprocessedRequests", typeof(IReadOnlyList<WriteRequest>));
-            _writeConcernError = (BulkWriteConcernError)info.GetValue("_writeConcernError", typeof(BulkWriteConcernError));
-            _writeErrors = (IReadOnlyList<BulkWriteOperationError>)info.GetValue("_writeErrors", typeof(IReadOnlyList<BulkWriteOperationError>));
-        }
-#endif
 
         // properties
         /// <summary>
@@ -120,18 +102,6 @@ namespace MongoDB.Driver.Core.Operations
         }
 
         // methods
-#if NET452
-        /// <inheritdoc/>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("_result", _result);
-            info.AddValue("_unprocessedRequests", _unprocessedRequests);
-            info.AddValue("_writeConcernError", _writeConcernError);
-            info.AddValue("_writeErrors", _writeErrors);
-        }
-#endif
-
         private static string FormatMessage(IReadOnlyList<BulkWriteOperationError> writeErrors, BulkWriteConcernError writeConcernError)
         {
             var sb = new StringBuilder("A bulk write operation resulted in one or more errors.");

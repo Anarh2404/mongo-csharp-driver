@@ -14,9 +14,9 @@
 */
 
 using System;
-#if !NETCOREAPP1_1
+
 using System.ComponentModel;
-#endif
+
 using System.Globalization;
 using System.Linq;
 using MongoDB.Bson.Serialization;
@@ -136,8 +136,8 @@ namespace MongoDB.Bson.Tests.Serialization
             Assert.True(bson.SequenceEqual(rehydrated.ToBson()));
         }
 
-#if !NETCOREAPP1_1
-        public class InventoryItem 
+
+        public class InventoryItem
             : ISupportInitialize
         {
             public int Price { get; set; }
@@ -170,7 +170,6 @@ namespace MongoDB.Bson.Tests.Serialization
             Assert.True(rehydrated.WasBeginInitCalled);
             Assert.True(rehydrated.WasEndInitCalled);
         }
-#endif
 
         [BsonKnownTypes(typeof(B), typeof(C))]
         private class A

@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Driver.Core.Connections;
 
 namespace MongoDB.Driver
@@ -48,18 +45,6 @@ namespace MongoDB.Driver
             : base(connectionId, message, innerException)
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoAuthenticationException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public MongoAuthenticationException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
 
         /// <inheritdoc/>
         public override bool IsNetworkException => false;

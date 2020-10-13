@@ -14,9 +14,6 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Bson;
 using MongoDB.Driver.Core.Misc;
 
@@ -61,17 +58,5 @@ namespace MongoDB.Driver.GridFS
             : base(FormatMessage(filename, revision))
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GridFSFileNotFoundException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public GridFSFileNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

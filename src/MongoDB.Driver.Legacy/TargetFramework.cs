@@ -18,12 +18,6 @@ namespace MongoDB.Driver.Legacy
     internal static class TargetFramework
     {
         public static string Moniker =>
-#if NET452
-            "net452";
-#elif NETSTANDARD1_5
-            "netstandard15";
-#elif NETSTANDARD2_0
             "netstandard20";
-#endif
     }
 }

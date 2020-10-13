@@ -13,10 +13,6 @@
 * limitations under the License.
 */
 
-#if NET452
-using System;
-using System.Runtime.Serialization;
-#endif
 using MongoDB.Driver.Core.Connections;
 using MongoDB.Driver.Core.Misc;
 
@@ -61,21 +57,6 @@ namespace MongoDB.Driver
             AddErrorLabelsFromWriteConcernResult(this, _writeConcernResult);
         }
 
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MongoWriteConcernException"/> class.
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public MongoWriteConcernException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            _writeConcernResult = (WriteConcernResult)info.GetValue("_writeConcernResult", typeof(WriteConcernResult));
-
-            AddErrorLabelsFromWriteConcernResult(this, _writeConcernResult);
-        }
-#endif
-
         // properties
         /// <summary>
         /// Gets the write concern result.
@@ -87,16 +68,6 @@ namespace MongoDB.Driver
         {
             get { return _writeConcernResult; }
         }
-
-        // methods
-#if NET452
-        /// <inheritdoc/>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            info.AddValue("_writeConcernResult", _writeConcernResult);
-        }
-#endif
 
         /// <summary>
         /// Determines whether the exception is due to a write concern error only.

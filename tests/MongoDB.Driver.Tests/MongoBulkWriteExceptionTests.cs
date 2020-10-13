@@ -17,9 +17,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-#if NET452
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using FluentAssertions;
 using MongoDB.Bson;
 using MongoDB.Bson.TestHelpers.EqualityComparers;
@@ -137,28 +134,5 @@ namespace MongoDB.Driver.Tests
             mapped.UnprocessedRequests[0].Should().BeOfType<InsertOneModel<BsonDocument>>();
             ((InsertOneModel<BsonDocument>)mapped.UnprocessedRequests[0]).Document.Should().Be("{a:1}");
         }
-
-#if NET452
-        [Fact]
-        public void Serialization_should_work()
-        {
-            var subject = new MongoBulkWriteException<BsonDocument>(__connectionId, __bulkWriteResult, __writeErrors, __writeConcernError, __unprocessedRequests);
-
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, subject);
-                stream.Position = 0;
-                var rehydrated = (MongoBulkWriteException<BsonDocument>)formatter.Deserialize(stream);
-
-                rehydrated.ConnectionId.Should().Be(subject.ConnectionId);
-                rehydrated.Message.Should().Be(subject.Message);
-                rehydrated.Result.Should().BeUsing(subject.Result, EqualityComparerRegistry.Default);
-                rehydrated.UnprocessedRequests.Should().EqualUsing(subject.UnprocessedRequests, EqualityComparerRegistry.Default);
-                rehydrated.WriteConcernError.Should().BeUsing(subject.WriteConcernError, EqualityComparerRegistry.Default);
-                rehydrated.WriteErrors.Should().EqualUsing(subject.WriteErrors, EqualityComparerRegistry.Default);
-            }
-        }
-#endif
     }
 }
