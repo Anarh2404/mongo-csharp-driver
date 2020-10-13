@@ -84,63 +84,6 @@ namespace MongoDB.Driver.Core.Connections
             string architecture;
             string osVersion;
 
-#if NET452
-            if (Type.GetType("Mono.Runtime") != null)
-            {
-                switch (Environment.OSVersion.Platform)
-                {
-                    case PlatformID.Win32S:
-                    case PlatformID.Win32Windows:
-                    case PlatformID.Win32NT:
-                    case PlatformID.WinCE:
-                        osType = "Windows";
-                        break;
-
-                    case PlatformID.Unix:
-                        osType = "Linux";
-                        break;
-
-                    case PlatformID.Xbox:
-                        osType = "XBox";
-                        break;
-
-                    case PlatformID.MacOSX:
-                        osType = "macOS";
-                        break;
-
-                    default:
-                        osType = "unknown";
-                        break;
-                }
-
-                osName = Environment.OSVersion.VersionString;
-
-                PortableExecutableKinds peKind;
-                ImageFileMachine machine;
-                typeof(object).Module.GetPEKind(out peKind, out machine);
-                switch (machine)
-                {
-                    case ImageFileMachine.I386:
-                        architecture = "x86_32";
-                        break;
-                    case ImageFileMachine.IA64:
-                    case ImageFileMachine.AMD64:
-                        architecture = "x86_64";
-                        break;
-                    case ImageFileMachine.ARM:
-                        architecture = "arm" + (Environment.Is64BitProcess ? "64" : "");
-                        break;
-                    default:
-                        architecture = null;
-                        break;
-                }
-
-                osVersion = Environment.OSVersion.Version.ToString();
-
-                return CreateOSDocument(osType, osName, architecture, osVersion);
-            }
-#endif
-
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 osType = "Windows";

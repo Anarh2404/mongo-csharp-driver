@@ -25,9 +25,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a write exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoWriteException : MongoServerException
     {
         // static

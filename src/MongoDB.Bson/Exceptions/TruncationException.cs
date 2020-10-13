@@ -14,18 +14,12 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 
 namespace MongoDB.Bson
 {
     /// <summary>
     /// Represents a truncation exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
     public class TruncationException : BsonException
     {
         // constructors
@@ -55,17 +49,5 @@ namespace MongoDB.Bson
             : base(message, innerException)
         {
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the TruncationException class (this overload used by deserialization).
-        /// </summary>
-        /// <param name="info">The SerializationInfo.</param>
-        /// <param name="context">The StreamingContext.</param>
-        public TruncationException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }

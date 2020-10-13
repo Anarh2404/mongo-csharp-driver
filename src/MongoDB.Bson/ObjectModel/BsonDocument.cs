@@ -28,9 +28,7 @@ namespace MongoDB.Bson
     /// <summary>
     /// Represents a BSON document.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class BsonDocument : BsonValue, IComparable<BsonDocument>, IConvertibleToBsonDocument, IEnumerable<BsonElement>, IEquatable<BsonDocument>
     {
         // constants

@@ -538,9 +538,7 @@ namespace MongoDB.Bson.Serialization
             switch (Type.GetTypeCode(type))
             {
                 case TypeCode.Empty:
-#if NET452
-                case TypeCode.DBNull:
-#endif
+
                 case TypeCode.String:
                     break;
                 case TypeCode.Object:

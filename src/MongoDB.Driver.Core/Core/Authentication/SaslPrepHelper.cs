@@ -1,27 +1,27 @@
 ﻿/* Original work:
  *   Copyright 2017 Tom Bentley
- * 
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *   
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *   
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
- * 
- * Modified work: 
+ *
+ * Modified work:
  *   Copyright 2018–present MongoDB Inc.
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *   
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- *   
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,8 +47,8 @@ namespace MongoDB.Driver.Core.Authentication
         private const int SurrogateMaxCodePoint = 0x00dfff;
 
         /// <summary>
-        /// Return the SASLPrep-canonicalised version of the given <paramref name="str"/> for use as a query string.                          
-        /// This implements the {@code SASLPrep} algorithm defined in <a href="https://tools.ietf.org/html/rfc4013">RFC 4013</a>.          
+        /// Return the SASLPrep-canonicalised version of the given <paramref name="str"/> for use as a query string.
+        /// This implements the {@code SASLPrep} algorithm defined in <a href="https://tools.ietf.org/html/rfc4013">RFC 4013</a>.
         /// See <a href="https://tools.ietf.org/html/rfc3454#section-7">RFC 3454, Section 7</a> for discussion of what a
         /// query string is.
         /// String normalization step in the .NET Standard version of the driver is skipped due to a lack of a string
@@ -62,7 +62,7 @@ namespace MongoDB.Driver.Core.Authentication
         }
 
         /// <summary>
-        /// Return the SASLPrep-canonicalised version of the given <paramref name="str"/> for use as a stored string.                          
+        /// Return the SASLPrep-canonicalised version of the given <paramref name="str"/> for use as a stored string.
         /// This implements the SASLPrep algorithm defined in <a href="https://tools.ietf.org/html/rfc4013">RFC 4013</a>.
         /// See <a href="https://tools.ietf.org/html/rfc3454#section-7">RFC 3454, Section 7</a> for discussion of what a
         /// stored string is.
@@ -103,13 +103,10 @@ namespace MongoDB.Driver.Core.Authentication
 
             var mappedString = new string(chars.Take(length).ToArray());
             // 2. Normalize
-#if NET452
-            var normalized = mappedString.Normalize(NormalizationForm.FormKC);
-#else
+
             // String normalization step in the .NET Standard version of the driver is skipped due to a lack of a string
             // normalization function.
             var normalized = mappedString;
-#endif
             var containsRandALCat = false;
             var containsLCat = false;
             var initialRandALCat = false;
@@ -151,7 +148,7 @@ namespace MongoDB.Driver.Core.Authentication
 
         /// <summary>
         /// Return true if the given <paramref name="ch"/> is an ASCII control character as defined by
-        /// <a href="https://tools.ietf.org/html/rfc3454#appendix-C.2.1">RFC 3454, Appendix C.2.1</a>. 
+        /// <a href="https://tools.ietf.org/html/rfc3454#appendix-C.2.1">RFC 3454, Appendix C.2.1</a>.
         /// </summary>
         /// <param name="ch">The character.</param>
         /// <returns>Whether the given character is an ASCII control character.</returns>
@@ -197,7 +194,7 @@ namespace MongoDB.Driver.Core.Authentication
 
         /// <summary>
         /// Return true if the given <paramref name="codepoint"/> is inappropriate for canonical representation
-        /// characters as defined by <a href="https://tools.ietf.org/html/rfc3454#appendix-C.7">RFC 3454, Appendix C.7</a>. 
+        /// characters as defined by <a href="https://tools.ietf.org/html/rfc3454#appendix-C.7">RFC 3454, Appendix C.7</a>.
         /// </summary>
         /// <param name="codepoint">The Unicode character's codepoint.</param>
         /// <returns>True if the codepoint is inappropriate for canonical.</returns>
@@ -657,7 +654,7 @@ namespace MongoDB.Driver.Core.Authentication
 
         /// <summary>
         ///  Return true if the given <paramref name="ch"/> is a "commonly mapped to nothing" character as defined by
-        ///  <a href="https://tools.ietf.org/html/rfc3454#appendix-B.1">RFC 3454, Appendix B.1</a>. 
+        ///  <a href="https://tools.ietf.org/html/rfc3454#appendix-B.1">RFC 3454, Appendix B.1</a>.
         /// </summary>
         /// <param name="ch">The character.</param>
         /// <returns>Whether the given character is a "commonly mapped to nothing" character.</returns>
@@ -679,7 +676,7 @@ namespace MongoDB.Driver.Core.Authentication
 
         /// <summary>
         /// Return true if the given <paramref name="codepoint"/> is a non-ASCII control character as defined by
-        /// <a href="https://tools.ietf.org/html/rfc3454#appendix-C.2.2">RFC 3454, Appendix C.2.2</a>. 
+        /// <a href="https://tools.ietf.org/html/rfc3454#appendix-C.2.2">RFC 3454, Appendix C.2.2</a>.
         /// </summary>
         /// <param name="codepoint">The Unicode character's codepoint.</param>
         /// <returns>Whether the given character is a non-ASCII control character.</returns>
@@ -705,7 +702,7 @@ namespace MongoDB.Driver.Core.Authentication
 
         /// <summary>
         /// Return true if the given <paramref name="ch"/> is a non-ASCII space character as defined by
-        /// <a href="https://tools.ietf.org/html/rfc3454#appendix-C.1.2">RFC 3454, Appendix C.1.2</a>. 
+        /// <a href="https://tools.ietf.org/html/rfc3454#appendix-C.1.2">RFC 3454, Appendix C.1.2</a>.
         /// </summary>
         /// <param name="ch">The character.</param>
         /// <returns>Whether the given character is a non-ASCII space character.</returns>
@@ -762,7 +759,7 @@ namespace MongoDB.Driver.Core.Authentication
 
         /// <summary>
         /// Return true if the given <paramref name="codepoint"/> is a prohibited character as defined by
-        ///<a href="https://tools.ietf.org/html/rfc4013#section-2.3">RFC 4013, Section 2.3</a>. 
+        ///<a href="https://tools.ietf.org/html/rfc4013#section-2.3">RFC 4013, Section 2.3</a>.
         /// </summary>
         /// <param name="codepoint">The Unicode character's codepoint.</param>
         /// <returns>Whether the codepoint is a prohibited character.</returns>

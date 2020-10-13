@@ -25,9 +25,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoException : Exception
     {
         // private fields

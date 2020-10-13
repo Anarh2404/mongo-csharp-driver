@@ -26,9 +26,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB connection pool wait queue full exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoWaitQueueFullException : MongoClientException
     {
         #region static

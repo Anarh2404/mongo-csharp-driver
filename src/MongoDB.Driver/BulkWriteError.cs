@@ -26,9 +26,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents the details of a write error for a particular request.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class BulkWriteError : WriteError
     {
         // private fields

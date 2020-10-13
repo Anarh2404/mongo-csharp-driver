@@ -27,9 +27,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents an immutable URL style connection string. See also MongoUrlBuilder.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoUrl : IEquatable<MongoUrl>
     {
         // private static fields

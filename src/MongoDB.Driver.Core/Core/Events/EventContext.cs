@@ -16,12 +16,7 @@
 using System;
 using MongoDB.Driver.Core.Misc;
 
-#if NET452
-using System.Runtime.Remoting.Messaging;
-#endif
-#if !NET45
 using System.Threading;
-#endif
 
 namespace MongoDB.Driver.Core.Events
 {
@@ -156,30 +151,5 @@ namespace MongoDB.Driver.Core.Events
                 EventContext.OperationId = null;
             }
         }
-
-#if NET452
-        private class AsyncLocal<T>
-        {
-            private readonly string __name;
-
-            public AsyncLocal()
-            {
-                __name = Guid.NewGuid().ToString();
-            }
-
-            public T Value
-            {
-                get
-                {
-                    var value = CallContext.LogicalGetData(__name);
-                    return value == null ? default(T) : (T)value;
-                }
-                set
-                {
-                    CallContext.LogicalSetData(__name, value);
-                }
-            }
-        }
-#endif
     }
 }

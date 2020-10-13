@@ -289,28 +289,6 @@ namespace MongoDB.Driver.Core.Configuration
             throw new NotSupportedException("Unable to create an authenticator.");
         }
 
-#if NET452
-        /// <summary>
-        /// Configures the cluster to write performance counters.
-        /// </summary>
-        /// <param name="builder">The cluster builder.</param>
-        /// <param name="applicationName">The name of the application.</param>
-        /// <param name="install">if set to <c>true</c> install the performance counters first.</param>
-        /// <returns>A reconfigured cluster builder.</returns>
-        public static ClusterBuilder UsePerformanceCounters(this ClusterBuilder builder, string applicationName, bool install = false)
-        {
-            Ensure.IsNotNull(builder, nameof(builder));
-
-            if (install)
-            {
-                PerformanceCounterEventSubscriber.InstallPerformanceCounters();
-            }
-
-            var subscriber = new PerformanceCounterEventSubscriber(applicationName);
-            return builder.Subscribe(subscriber);
-        }
-#endif
-
         /// <summary>
         /// Configures the cluster to trace events to the specified <paramref name="traceSource"/>.
         /// </summary>

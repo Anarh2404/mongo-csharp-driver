@@ -20,9 +20,7 @@ namespace MongoDB.Bson
     /// <summary>
     /// Represents the BSON Null value.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class BsonNull : BsonValue, IComparable<BsonNull>, IEquatable<BsonNull>
     {
         // private static fields

@@ -21,9 +21,6 @@ namespace MongoDB.Bson.IO
     /// <summary>
     /// Represents settings for a BsonBinaryReader.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
     public class BsonBinaryReaderSettings : BsonReaderSettings
     {
         // private static fields
@@ -79,7 +76,7 @@ namespace MongoDB.Bson.IO
         }
 
         /// <summary>
-        /// Gets or sets whether to fix occurrences of the old binary subtype on input. 
+        /// Gets or sets whether to fix occurrences of the old binary subtype on input.
         /// </summary>
         public bool FixOldBinarySubTypeOnInput
         {
@@ -92,7 +89,7 @@ namespace MongoDB.Bson.IO
         }
 
         /// <summary>
-        /// Gets or sets whether to fix occurrences of the old representation of DateTime.MaxValue on input. 
+        /// Gets or sets whether to fix occurrences of the old representation of DateTime.MaxValue on input.
         /// </summary>
         public bool FixOldDateTimeMaxValueOnInput
         {

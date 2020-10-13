@@ -21,9 +21,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents the details of a write concern error.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class WriteConcernError
     {
         // private fields

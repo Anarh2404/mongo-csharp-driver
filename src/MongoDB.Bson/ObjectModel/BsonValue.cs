@@ -22,9 +22,7 @@ namespace MongoDB.Bson
     /// <summary>
     /// Represents a BSON value (this is an abstract class, see the various subclasses).
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public abstract class BsonValue : IComparable<BsonValue>, IConvertible, IEquatable<BsonValue>
     {
         // private static fields
@@ -1283,7 +1281,7 @@ namespace MongoDB.Bson
         public virtual bool ToBoolean()
         {
             // some subclasses override as appropriate
-            return true; // everything else is true        
+            return true; // everything else is true
         }
 
         /// <summary>

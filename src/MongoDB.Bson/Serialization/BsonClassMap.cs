@@ -419,9 +419,6 @@ namespace MongoDB.Bson.Serialization
         // private static methods
         private static Type GetFormatterServicesType()
         {
-#if NET452
-            return typeof(FormatterServices);
-#else
             // TODO: once we depend on newer versions of .NET Standard we should be able to do this without reflection
 
             try
@@ -1602,30 +1599,6 @@ namespace MongoDB.Bson.Serialization
         {
             var interfaceType = interfacePropertyInfo.DeclaringType;
 
-#if NETSTANDARD1_5
-            var actualTypeInfo = actualType.GetTypeInfo();
-            var bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
-            var actualTypePropertyInfos = actualTypeInfo.GetMembers(bindingFlags).OfType<PropertyInfo>();
-
-            var explicitlyImplementedPropertyName = $"{interfacePropertyInfo.DeclaringType.FullName}.{interfacePropertyInfo.Name}".Replace("+", ".");
-            var explicitlyImplementedPropertyInfo = actualTypePropertyInfos
-                .Where(p => p.Name == explicitlyImplementedPropertyName)
-                .SingleOrDefault();
-            if (explicitlyImplementedPropertyInfo != null)
-            {
-                return explicitlyImplementedPropertyInfo;
-            }
-
-            var implicitlyImplementedPropertyInfo = actualTypePropertyInfos
-                .Where(p => p.Name == interfacePropertyInfo.Name && p.PropertyType == interfacePropertyInfo.PropertyType)
-                .SingleOrDefault();
-            if (implicitlyImplementedPropertyInfo != null)
-            {
-                return implicitlyImplementedPropertyInfo;
-            }
-
-            throw new BsonSerializationException($"Unable to find property info for property: '{interfacePropertyInfo.Name}'.");
-#else
             // An interface map must be used because because there is no
             // other officially documented way to derive the explicitly
             // implemented property name.
@@ -1649,7 +1622,6 @@ namespace MongoDB.Bson.Serialization
                     var propertyAccessors = GetPropertyAccessors(propertyInfo);
                     return actualPropertyAccessors.All(x => propertyAccessors.Contains(x));
                 });
-#endif
         }
     }
 }

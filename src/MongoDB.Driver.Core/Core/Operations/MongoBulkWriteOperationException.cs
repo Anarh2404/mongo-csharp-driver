@@ -28,9 +28,7 @@ namespace MongoDB.Driver.Core.Operations
     /// <summary>
     /// Represents a bulk write operation exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoBulkWriteOperationException : MongoServerException
     {
         // fields

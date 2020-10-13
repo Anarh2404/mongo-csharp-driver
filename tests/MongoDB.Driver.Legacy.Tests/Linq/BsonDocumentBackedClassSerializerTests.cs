@@ -97,9 +97,7 @@ namespace MongoDB.Driver.Tests.Linq
             Name
         }
 
-#if NET452
-        [Serializable]
-#endif
+
         [BsonSerializer(typeof(TestDocumentClassSerializer))]
         public class TestDocument : BsonDocumentBackedClass
         {
@@ -166,7 +164,7 @@ namespace MongoDB.Driver.Tests.Linq
 
             public override bool TryGetMemberSerializationInfo(string memberName, out BsonSerializationInfo serializationInfo)
             {
-                // Dynamic members are allowed in a TestDocument if 
+                // Dynamic members are allowed in a TestDocument if
                 // they start with Dynamic- or are an ObjectId.
                 // Otherwise, we fall back to the base-class' definition.
 

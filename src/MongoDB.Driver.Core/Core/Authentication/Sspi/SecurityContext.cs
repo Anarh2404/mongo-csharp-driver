@@ -85,9 +85,6 @@ namespace MongoDB.Driver.Core.Authentication.Sspi
 
             var descriptor = new SecurityBufferDescriptor(buffers);
             bool contextAddRefSuccess = false;
-#if NET452
-            RuntimeHelpers.PrepareConstrainedRegions();
-#endif
             try
             {
                 DangerousAddRef(ref contextAddRefSuccess);
@@ -136,9 +133,7 @@ namespace MongoDB.Driver.Core.Authentication.Sspi
 
             bool contextAddRefSuccess = false;
             SecurityPackageContextSizes sizes;
-#if NET452
-            RuntimeHelpers.PrepareConstrainedRegions();
-#endif
+
             try
             {
                 DangerousAddRef(ref contextAddRefSuccess);
@@ -179,9 +174,7 @@ namespace MongoDB.Driver.Core.Authentication.Sspi
             };
 
             var descriptor = new SecurityBufferDescriptor(buffers);
-#if NET452
-            RuntimeHelpers.PrepareConstrainedRegions();
-#endif
+
             try
             {
                 DangerousAddRef(ref contextAddRefSuccess);
@@ -234,9 +227,7 @@ namespace MongoDB.Driver.Core.Authentication.Sspi
             bool credentialAddRefSuccess = false;
             bool contextAddRefSuccess = false;
 
-#if NET452
-            RuntimeHelpers.PrepareConstrainedRegions();
-#endif
+
             try
             {
                 _credential.DangerousAddRef(ref credentialAddRefSuccess);
@@ -349,18 +340,13 @@ namespace MongoDB.Driver.Core.Authentication.Sspi
                 }
 
                 var current = new IntPtr(array.ToInt64());
-#if NET452
-                var size = Marshal.SizeOf(typeof(SecurityPackageInfo));
-#else
+
                 var size = Marshal.SizeOf<SecurityPackageInfo>();
-#endif
+
                 for (int i = 0; i < count; i++)
                 {
-#if NET452
-                    var package = (SecurityPackageInfo)Marshal.PtrToStructure(current, typeof(SecurityPackageInfo));
-#else
+
                     var package = Marshal.PtrToStructure<SecurityPackageInfo>(current);
-#endif
                     if (package.Name != null && package.Name.Equals(SspiPackage.Kerberos.ToString(), StringComparison.OrdinalIgnoreCase))
                     {
                         return (int)package.MaxTokenSize;

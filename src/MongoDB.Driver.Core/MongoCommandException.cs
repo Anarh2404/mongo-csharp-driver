@@ -25,9 +25,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB command exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoCommandException : MongoServerException
     {
         // fields

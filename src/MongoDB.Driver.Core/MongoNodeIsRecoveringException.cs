@@ -25,9 +25,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB node is recovering exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoNodeIsRecoveringException : MongoCommandException
     {
         #region static

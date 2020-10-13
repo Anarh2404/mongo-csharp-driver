@@ -27,9 +27,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB incompatible driver exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoIncompatibleDriverException : MongoClientException
     {
         #region static

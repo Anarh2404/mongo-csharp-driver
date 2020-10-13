@@ -14,18 +14,13 @@
 */
 
 using System;
-#if NET452
-using System.Runtime.Serialization;
-#endif
 
 namespace MongoDB.Driver.Core.Authentication.Sspi
 {
     /// <summary>
     /// Thrown from a win32 wrapped operation.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class Win32Exception : Exception
     {
         /// <summary>
@@ -47,17 +42,5 @@ namespace MongoDB.Driver.Core.Authentication.Sspi
         {
             HResult = (int)errorCode;
         }
-
-#if NET452
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Win32Exception" /> class.
-        /// </summary>
-        /// <param name="info">The info.</param>
-        /// <param name="context">The context.</param>
-        protected Win32Exception(SerializationInfo info, StreamingContext context)
-            : base(info, context) 
-        { 
-        }
-#endif
     }
 }

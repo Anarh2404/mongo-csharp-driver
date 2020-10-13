@@ -20,9 +20,7 @@ namespace MongoDB.Bson.IO
     /// <summary>
     /// Represents settings for a BsonReader.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public abstract class BsonReaderSettings
     {
         // private fields

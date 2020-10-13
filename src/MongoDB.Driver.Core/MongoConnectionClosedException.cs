@@ -24,9 +24,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB connection failed exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoConnectionClosedException : MongoConnectionException
     {
         // constructors

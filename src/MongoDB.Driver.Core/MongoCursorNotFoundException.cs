@@ -26,9 +26,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB cursor not found exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoCursorNotFoundException : MongoQueryException
     {
         #region static

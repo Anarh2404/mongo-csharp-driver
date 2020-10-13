@@ -25,9 +25,7 @@ namespace MongoDB.Driver
     /// <summary>
     /// Represents a MongoDB execution timeout exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class MongoExecutionTimeoutException : MongoServerException
     {
         private readonly BsonDocument _result;

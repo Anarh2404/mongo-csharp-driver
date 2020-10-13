@@ -25,9 +25,7 @@ namespace MongoDB.Driver.GridFS
     /// <summary>
     /// Represents a GridFSFileNotFound exception.
     /// </summary>
-#if NET452
-    [Serializable]
-#endif
+
     public class GridFSFileNotFoundException : GridFSException
     {
         #region static
