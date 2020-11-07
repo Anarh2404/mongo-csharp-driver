@@ -221,6 +221,12 @@ namespace MongoDB.Driver.Core.Misc
             {
                 var backingBytes = buffer.AccessBackingBytes(offset);
                 var bytesToWrite = Math.Min(count, backingBytes.Count);
+
+#if DEBUG
+                var bytes = backingBytes.AsSpan(0, count).ToArray();
+                var str = string.Join(',', bytes);
+                Console.WriteLine(str + '\n');
+#endif
                 await stream.WriteAsync(backingBytes.Array, backingBytes.Offset, bytesToWrite, timeout, cancellationToken).ConfigureAwait(false);
                 offset += bytesToWrite;
                 count -= bytesToWrite;

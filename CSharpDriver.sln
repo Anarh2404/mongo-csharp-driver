@@ -42,9 +42,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MongoDBTest.ruleset = MongoDBTest.ruleset
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkippableTests", "tests\SkippableTests\SkippableTests.csproj", "{D198833A-6AC3-4327-8B02-5095455192D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkippableTests", "tests\SkippableTests\SkippableTests.csproj", "{D198833A-6AC3-4327-8B02-5095455192D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstrolabeWorkloadExecutor", "tests\AstrolabeWorkloadExecutor\AstrolabeWorkloadExecutor.csproj", "{B90F025F-89D3-436A-AD78-6AA304A6E240}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AstrolabeWorkloadExecutor", "tests\AstrolabeWorkloadExecutor\AstrolabeWorkloadExecutor.csproj", "{B90F025F-89D3-436A-AD78-6AA304A6E240}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{F1A1472C-8A2C-4B25-9FE5-F067272BADEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NugetTestApp", "NugetTestApp\NugetTestApp.csproj", "{D1D20BA0-1C4B-4C58-AB7D-82D92D237F04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +116,14 @@ Global
 		{B90F025F-89D3-436A-AD78-6AA304A6E240}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B90F025F-89D3-436A-AD78-6AA304A6E240}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B90F025F-89D3-436A-AD78-6AA304A6E240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1A1472C-8A2C-4B25-9FE5-F067272BADEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A1472C-8A2C-4B25-9FE5-F067272BADEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A1472C-8A2C-4B25-9FE5-F067272BADEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A1472C-8A2C-4B25-9FE5-F067272BADEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1D20BA0-1C4B-4C58-AB7D-82D92D237F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1D20BA0-1C4B-4C58-AB7D-82D92D237F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1D20BA0-1C4B-4C58-AB7D-82D92D237F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1D20BA0-1C4B-4C58-AB7D-82D92D237F04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +144,8 @@ Global
 		{C50D554C-2771-4CC1-9B2C-BB17FB27F935} = {E472BDF5-61F1-461D-872B-9F53BB3ACA80}
 		{D198833A-6AC3-4327-8B02-5095455192D0} = {E472BDF5-61F1-461D-872B-9F53BB3ACA80}
 		{B90F025F-89D3-436A-AD78-6AA304A6E240} = {E472BDF5-61F1-461D-872B-9F53BB3ACA80}
+		{F1A1472C-8A2C-4B25-9FE5-F067272BADEB} = {E472BDF5-61F1-461D-872B-9F53BB3ACA80}
+		{D1D20BA0-1C4B-4C58-AB7D-82D92D237F04} = {E472BDF5-61F1-461D-872B-9F53BB3ACA80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {24BEC44B-92B0-43AA-9B15-163459D0C098}

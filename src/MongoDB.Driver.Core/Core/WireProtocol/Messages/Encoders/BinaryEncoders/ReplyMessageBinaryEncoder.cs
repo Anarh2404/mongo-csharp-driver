@@ -87,7 +87,8 @@ namespace MongoDB.Driver.Core.WireProtocol.Messages.Encoders.BinaryEncoders
                     {
                         builder.AllowDuplicateElementNames = allowDuplicateElementNames;
                     });
-                    documents.Add(_serializer.Deserialize(context));
+                    var doc = _serializer.Deserialize(context);
+                    documents.Add(doc);
                 }
             }
 

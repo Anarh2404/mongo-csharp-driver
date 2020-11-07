@@ -603,6 +603,7 @@ namespace MongoDB.Driver.Core.Connections
             try
             {
                 helper.EncodingMessages();
+
                 using (var uncompressedBuffer = helper.EncodeMessages(cancellationToken, out var sentMessages))
                 {
                     helper.SendingMessages(uncompressedBuffer);
